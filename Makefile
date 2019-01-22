@@ -262,7 +262,7 @@ test-p1b:
 
 handin: handin-check
 	@echo "Handing in with git (this may ask for your GitHub username/password)..."
-	@git push origin master
+	@git push
 
 
 handin-check:
