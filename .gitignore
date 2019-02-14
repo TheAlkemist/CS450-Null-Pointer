@@ -1,5 +1,4 @@
 *~
-_*
 *.o
 *.d
 *.asm
@@ -16,3 +15,5 @@ mkfs
 .gdbinit
 *.patch
 *.log
+.DS_Store
+*.pyc
