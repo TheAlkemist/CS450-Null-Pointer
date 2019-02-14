@@ -257,6 +257,8 @@ EXTRA=\
 	README dot-bochsrc *.pl toc.* runoff runoff1 runoff.list\
 	.gdbinit.tmpl gdbutil\
 
+test-p1b:
+	@tests/p1b/runtests
 test-p2b:
 	@tests/p2b/runtests
 

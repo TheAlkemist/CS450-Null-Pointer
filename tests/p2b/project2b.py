@@ -1,9 +1,7 @@
+#! /bin/env python
+
 import toolspath
 from testing import Xv6Build, Xv6Test
-
-'''
-Basic System Call Tests
-'''
 
 class Scheduling1(Xv6Test):
    name = "getpinfo"
