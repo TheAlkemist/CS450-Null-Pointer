@@ -277,6 +277,12 @@ handin-check:
 		read -p "You are not on the master branch.  Hand-in the current branch? [y/N] " r; \
 		test "$$r" = y; \
 	fi
+	@if ! test -e info.txt; then \
+		echo "You haven't created an info.txt file!"; \
+		echo "Please create one with your name, email, etc."; \
+		echo "then add and commit it to continue."; \
+		false; \
+	fi
 	@if ! git diff-files --quiet || ! git diff-index --quiet --cached HEAD; then \
 		git status -s; \
 		echo; \
