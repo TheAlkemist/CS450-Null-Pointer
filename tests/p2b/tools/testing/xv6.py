@@ -42,7 +42,7 @@ class Xv6Test(BuildTest, Test):
       child.sendline("tester")
 
       # check if test passed
-      patterns = ["TEST FAILED", "cpu\d: panic: .*\n", "PASSED TEST!", "[$][ ]"]
+      patterns = ["failed", "cpu\d: panic: .*\n", "Should print 1 then 2", "[$][ ]"]
       index = child.expect(patterns)
       if index == 0:
          self.fail("tester failed")
