@@ -259,8 +259,10 @@ EXTRA=\
 
 test-p1b:
 	@tests/p1b/runtests
-test-p2b:
-	@tests/p2b/runtests
+
+test-p2b-cont:
+	@tests/p2b/runtests -c
+
 
 handin: handin-check
 	@echo "Handing in with git (this may ask for your GitHub username/password)..."
