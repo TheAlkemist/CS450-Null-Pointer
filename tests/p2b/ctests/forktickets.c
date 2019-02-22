@@ -32,6 +32,8 @@ main(int argc, char *argv[]){
     printf(1, "Should print 1 then 2");
     exit();
 	}
-  while (wait() > 0);
-	exit();
+
+    while (wait() > 0);
+
+    exit();
 }

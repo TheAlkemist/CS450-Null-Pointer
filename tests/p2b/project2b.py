@@ -118,5 +118,7 @@ class Scheduling13(Xv6Test):
    timeout = 30
 
 import toolspath
+
 from testing.runtests import main
-main(Xv6Build, [Scheduling1, Scheduling2, Scheduling3, Scheduling4, Scheduling5, Scheduling6, Scheduling7, Scheduling8, Scheduling9, Scheduling10, Scheduling11,Scheduling12,Scheduling13])
+main(Xv6Build, [Scheduling1, Scheduling2, Scheduling3, Scheduling4, Scheduling5, Scheduling6, Scheduling7])
+#main(Xv6Build, [Scheduling1, Scheduling2, Scheduling3, Scheduling4, Scheduling5, Scheduling6, Scheduling7, Scheduling8, Scheduling9, Scheduling10, Scheduling11,Scheduling12,Scheduling13])

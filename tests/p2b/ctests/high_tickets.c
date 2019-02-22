@@ -6,19 +6,23 @@
    printf(1, "%s:%d check (" #exp ") failed: %s\n", __FILE__, __LINE__, msg);\
    exit();}
 
-void spin()
+#if __GNUC__ >= 4 && __GNUC_MINOR__ >= 4
+int spin() __attribute__((optimize("-O0")));
+#endif
+int spin() 
 {
-	int i = 0;
-  int j = 0;
-  int k = 0;
-	for(i = 0; i < 500; ++i)
-	{
-		for(j = 0; j < 200000; ++j)
-		{
-			k = j % 10;
-      k = k + 1;
+    int i = 0;
+    int j = 0;
+    int k = 0;
+    for(i = 0; i < 500; ++i)
+    {
+        for(j = 0; j < 200000; ++j)
+        {
+            k = j % 10;
+            k = k + 1;
+        }
     }
-	}
+    return k;
 }
 
 void print(struct pstat *st)
@@ -92,7 +96,7 @@ main(int argc, char *argv[])
 	      exit();
    }
    spin();
-   printf(1, " then 2");
    while (wait() > -1);
+   printf(1, " then 2");
    exit();
 }
