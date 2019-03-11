@@ -260,8 +260,17 @@ EXTRA=\
 test-p1b:
 	@tests/p1b/runtests
 
+test-p2b:
+	@tests/p2b/runtests 
+
 test-p2b-cont:
 	@tests/p2b/runtests -c
+
+test-p3b:
+	@tests/p3b/runtests 
+
+test-p3b-cont:
+	@tests/p3b/runtests -c
 
 
 handin: handin-check
