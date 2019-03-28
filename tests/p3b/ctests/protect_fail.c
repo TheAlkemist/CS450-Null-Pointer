@@ -13,26 +13,26 @@
 int
 main(int argc, char *argv[])
 {
-  char a;
+  volatile char a;
   int ppid = getpid();
 
   // failed system call should not affect anything
 
   mprotect((void *)0x1004, 1);
-  a = *(char*)0x1004;
+  a = *(volatile char*)0x1004;
   munprotect((void *)0x1004, 1);
-  a = *(char*)0x1004;
+  a = *(volatile char*)0x1004;
 
   mprotect((void *)0x1000, 0);
-  a = *(char*)0x1000;
+  a = *(volatile char*)0x1000;
   munprotect((void *)0x1000, 0);
-  a = *(char*)0x1000;
+  a = *(volatile char*)0x1000;
 
   void* heap = sbrk(0);
   mprotect(heap - PGSIZE, 2);
-  a = *(char*)(heap-PGSIZE); // should not be protected
+  a = *(volatile char*)(heap-PGSIZE); // should not be protected
   if (fork() == 0) {
-    a = *(char*)heap; // outside address space
+    a = *(volatile char*)heap; // outside address space
     // should not reach here
     printf(1, "TEST FAILED\n");
     kill(ppid);
@@ -41,7 +41,7 @@ main(int argc, char *argv[])
     wait();
   }
   sbrk(PGSIZE);
-  ((char*)heap)[0] = a; // should not be protected
+  ((volatile char*)heap)[0] = a; // should not be protected
 
   printf(1, "PASSED TEST!\n");
   exit();

@@ -22,7 +22,7 @@ for testname in '''null null2 bounds
       'name': testname,
       'tester': 'ctests/' + testname + '.c',
       'description': get_description(testname),
-      'timeout': 5 if testname != 'usertests' else 240,
+      'timeout': 10 if testname != 'usertests' else 240,
       'point_value': 10 if testname in {
           'null', 'null2', 'bounds', 'protect_args',
           } else {}.get(testname, 20)
