@@ -24,8 +24,8 @@ void            panic(char*) __attribute__((noreturn));
 
 // exec.c
 int             exec(char*, char**);
-int             mprotect(void*, int);
-int             munprotect(void*, int);
+int             mprotect(void);
+int             munprotect(void);
 
 
 

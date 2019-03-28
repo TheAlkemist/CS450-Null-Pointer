@@ -93,12 +93,12 @@ sys_uptime(void)
 int
 sys_mprotect(void)
 {
- return mprotect();
+ return 1;
 }
 
 int
 sys_munprotect(void)
 {
- return munprotect();
+ return 1;
 }
 
