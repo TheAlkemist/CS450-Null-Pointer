@@ -24,6 +24,10 @@ void            panic(char*) __attribute__((noreturn));
 
 // exec.c
 int             exec(char*, char**);
+int             mprotect(void*, int);
+int             munprotect(void*, int);
+
+
 
 // file.c
 struct file*    filealloc(void);
@@ -120,6 +124,7 @@ void            userinit(void);
 int             wait(void);
 void            wakeup(void*);
 void            yield(void);
+
 
 // swtch.S
 void            swtch(struct context**, struct context*);
