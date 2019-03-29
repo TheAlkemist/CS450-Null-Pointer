@@ -385,6 +385,55 @@ copyout(pde_t *pgdir, uint va, void *p, uint len)
   return 0;
 }
 
+int
+mprotect()
+{
+// void *ap;
+ int len;
+ int addr;
+ int x;
+ //int alignValue;
+
+ addr = argint(0,&x); 
+ //addr = (int)ap;
+
+ if (argint(1,&len)<=0)
+ {
+  return -1;
+ }
+
+ if((addr%PGSIZE)!=0)
+ {
+  return -1;
+ }
+
+
+return 0;
+}
+
+int munprotect()
+{
+// void *ap;
+ int len;
+ int addr;
+ int x;
+// int alignValue;
+
+ addr = argint(0,&x);
+ //addr = (int)ap;
+
+ if (argint(1,&len)<=0)
+ {
+  return -1;
+ }
+
+ if(addr % PGSIZE!=0)
+ {
+  return -1;
+ }
+ return 0;
+}
+
 //PAGEBREAK!
 // Blank page.
 //PAGEBREAK!
