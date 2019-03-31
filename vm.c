@@ -400,21 +400,32 @@ mprotect(void *addr, int len)
  }
  
  pte_t *pagete;
- do{
+ while (intaddr < ((int)addr + len*PGSIZE)){
    pagete = walkpgdir(myproc()->pgdir, (void *)intaddr, 0);
    if (pagete == 0x0){
      return -1;
    }
-   if(*pagete & PTE_P){
-     intaddr += PGSIZE;
-     //*pagete &= 0xfffffff9;
-     *pagete |= (PTE_P | PTE_U);
-   }
-   else{
+   if(!(*pagete & PTE_P)){
      return -1;
    }
+   intaddr = intaddr + PGSIZE;
+ }
+ intaddr = (int)addr; 
+ do{
+   pagete = walkpgdir(myproc()->pgdir, (void *)intaddr, 0);
+   //if (pagete == 0x0){
+     //return -1;
+   //}
+   //if(*pagete & PTE_P){
+     intaddr += PGSIZE;
+     *pagete &= 0xfffffff9;
+     *pagete |= (PTE_P | PTE_U);
+   //}
+   //else{
+     //return -1;
+   //}
  
- }while (intaddr < ((int)addr + len));
+ }while (intaddr < ((int)addr + len*PGSIZE));
  lcr3(V2P(myproc()->pgdir));
  return 0;
 }
@@ -429,23 +440,35 @@ int munprotect(void *addr, int len)
   {
    return -1;
   }
-
+  
   pte_t *pagete;
-  do{
-    pagete = walkpgdir(myproc()->pgdir, (void *)intaddr,0);
+  while (intaddr < ((int)addr + len*PGSIZE)){
+    pagete = walkpgdir(myproc()->pgdir, (void *)intaddr, 0);
     if (pagete == 0x0){
       return -1;
     }
-    if(*pagete & PTE_P){
-
-     intaddr+=PGSIZE;
-     //*pagete &= 0xfffffff9;
-     *pagete |= (PTE_P | PTE_W| PTE_U);
-    }
-    else{
+    if(!(*pagete & PTE_P)){
       return -1;
     }
- }while (intaddr < ((int)addr + len));
+    intaddr = intaddr + PGSIZE;
+  }
+  intaddr = (int)addr;
+
+  do{
+    pagete = walkpgdir(myproc()->pgdir, (void *)intaddr,0);
+    //if (pagete == 0x0){
+      //return -1;
+    //}
+    //if(*pagete & PTE_P){
+
+     intaddr+=PGSIZE;
+     *pagete &= 0xfffffff9;
+     *pagete |= (PTE_P | PTE_W| PTE_U);
+    //}
+    //else{
+      //return -1;
+    //}
+ }while (intaddr < ((int)addr + len*PGSIZE));
  lcr3(V2P(myproc()->pgdir));
  return 0;
 
