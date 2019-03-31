@@ -386,52 +386,69 @@ copyout(pde_t *pgdir, uint va, void *p, uint len)
 }
 
 int
-mprotect()
+mprotect(void *addr, int len)
 {
-// void *ap;
- int len;
- int addr;
- int x;
- //int alignValue;
-
- addr = argint(0,&x); 
- //addr = (int)ap;
-
- if (argint(1,&len)<=0)
+ //int ;
+ if (len < 1){
+  return -1;
+ }
+ int intaddr = (int)addr;
+  
+ if((intaddr%PGSIZE)!=0) 
  {
   return -1;
  }
-
- if((addr%PGSIZE)!=0)
- {
-  return -1;
- }
-
-
-return 0;
+ 
+ pte_t *pagete;
+ do{
+   pagete = walkpgdir(myproc()->pgdir, (void *)intaddr, 0);
+   if (pagete == 0x0){
+     return -1;
+   }
+   if(*pagete & PTE_P){
+     intaddr += PGSIZE;
+     //*pagete &= 0xfffffff9;
+     *pagete |= (PTE_P | PTE_U);
+   }
+   else{
+     return -1;
+   }
+ 
+ }while (intaddr < ((int)addr + len));
+ lcr3(V2P(myproc()->pgdir));
+ return 0;
 }
 
-int munprotect()
+int munprotect(void *addr, int len)
 {
-// void *ap;
- int len;
- int addr;
- int x;
-// int alignValue;
+  if (len < 1){
+   return -1;
+  }
+  int intaddr = (int)addr;
+  if((intaddr%PGSIZE)!=0)
+  {
+   return -1;
+  }
 
- addr = argint(0,&x);
- //addr = (int)ap;
+  pte_t *pagete;
+  do{
+    pagete = walkpgdir(myproc()->pgdir, (void *)intaddr,0);
+    if (pagete == 0x0){
+      return -1;
+    }
+    if(*pagete & PTE_P){
 
- if (argint(1,&len)<=0)
- {
-  return -1;
- }
-
- if(addr % PGSIZE!=0)
- {
-  return -1;
- }
+     intaddr+=PGSIZE;
+     //*pagete &= 0xfffffff9;
+     *pagete |= (PTE_P | PTE_W| PTE_U);
+    }
+    else{
+      return -1;
+    }
+ }while (intaddr < ((int)addr + len));
+ lcr3(V2P(myproc()->pgdir));
  return 0;
+
 }
 
 //PAGEBREAK!

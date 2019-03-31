@@ -1,4 +1,5 @@
 Name: Christopher Udeh
 Email: Cudeh@Hawk.iit.edu
 ID: A20387963
-
+Name: Daniel Elias
+Email: delias3@hawk.iit.edu
